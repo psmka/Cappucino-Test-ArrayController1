@@ -1,0 +1,6 @@
+.XcodeSupport
+.DS_Store
+*.xcodeproj
+*.cib
+Frameworks
+
