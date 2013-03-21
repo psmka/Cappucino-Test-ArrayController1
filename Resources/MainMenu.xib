@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -335,7 +335,7 @@
 											<object class="NSMutableArray" key="NSTableColumns">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSTableColumn" id="287871225">
-													<double key="NSWidth">223.6875</double>
+													<double key="NSWidth">164.86328125</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">3.4028234663852886e+38</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -380,7 +380,7 @@
 													<reference key="NSTableView" ref="971713637"/>
 												</object>
 												<object class="NSTableColumn" id="881238260">
-													<double key="NSWidth">81.51171875</double>
+													<double key="NSWidth">113.32421875</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">3.4028234663852886e+38</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -406,7 +406,7 @@
 													<reference key="NSTableView" ref="971713637"/>
 												</object>
 												<object class="NSTableColumn" id="740118779">
-													<double key="NSWidth">124.59375</double>
+													<double key="NSWidth">155.59375</double>
 													<double key="NSMinWidth">10</double>
 													<double key="NSMaxWidth">3.4028234663852886e+38</double>
 													<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -445,9 +445,10 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-568328192</int>
+											<int key="NSTvFlags">-20971520</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
+											<int key="NSGridStyleMask">3</int>
 											<int key="NSColumnAutoresizingStyle">5</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -488,8 +489,7 @@
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="152379243"/>
 									<string key="NSAction">_doScroller:</string>
-									<double key="NSCurValue">1</double>
-									<double key="NSPercent">0.98444444444444446</double>
+									<double key="NSPercent">0.98663697104677062</double>
 								</object>
 								<object class="NSClipView" id="791373261">
 									<reference key="NSNextResponder" ref="152379243"/>

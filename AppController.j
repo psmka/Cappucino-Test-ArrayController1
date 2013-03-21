@@ -26,7 +26,6 @@ CPLogRegister(CPLogConsole);
     @outlet CPPanel             itemPanel;
     @outlet CPObjectController  objectController;
             Item                _currentItem    @accessors(property=currentItem);
-            int                 _currentItemRow @accessors(property=currentItemRow);
 }
 
 - (void)awakeFromCib
@@ -43,7 +42,7 @@ CPLogRegister(CPLogConsole);
     //create our UI elements
 
     //[tableView setCenter:[contentView center]];
-    [tableView setBackgroundColor:[CPColor redColor]];
+    [tableView setBackgroundColor:[CPColor whiteColor]];
     [tableView setDelegate:self];
 
 //    var column = [[CPTableColumn alloc] initWithIdentifier:@"name"];
@@ -73,7 +72,6 @@ CPLogRegister(CPLogConsole);
 }
 
 -(CPArray) itemsArray {
-    CPLog.trace(@"Property - itemsArray");
     if(_itemsArray == nil){
         CPLog.trace(@"Property - itemsArray - alloc");
         _itemsArray = [[CPArray alloc] init];
@@ -195,37 +193,42 @@ CPLogRegister(CPLogConsole);
 }
 
 -(@action) showItemPanel:(id) sender {
-    _currentItemRow = [tableView selectedRow];
-    var selectedItem = [_itemsArray objectAtIndex:_currentItemRow];
+    var kvc = [self mutableArrayValueForKey:@"itemsArray"];
+    var selectedItem = [kvc objectAtIndex:[tableView selectedRow]];
     var item = [[Item alloc] initWithItem:selectedItem];
 //    [self setValue:item forKey:@"currentItem"];
     [self setCurrentItem:item];
 
-    CPLog.trace(@"(@action) showItemPanel:(id) sender - %i:%@",_currentItemRow,_currentItem);
+    CPLog.trace(@"(@action) showItemPanel:(id) sender - %@",_currentItem);
 
 	[itemPanel setTitle:@"Item properties"];
 	[itemPanel center];
-	[itemPanel runModal];
+	[CPApp runModalForWindow:itemPanel];
 
 }
 
 -(@action) itemPanel:(id) sender {
     CPLog.trace(@"@action) itemPanel:(id) sender - title: %@",[sender title]);
     if([[sender title] isEqualToString:@"OK"]){
-        CPLog.trace(@"@action) replace index %i with item %@",_currentItemRow,_currentItem);
+        CPLog.trace(@"@action) replace index %i with item %@",_currentItem);
         var kvc = [self mutableArrayValueForKey:@"itemsArray"];
-        [kvc replaceObjectAtIndex:_currentItemRow withObject:_currentItem];
+        var row = [kvc indexOfObject:_currentItem];
+        [kvc replaceObjectAtIndex:row withObject:_currentItem];
     }
-    [itemPanel orderOut:self];
+    [CPApp abortModal];
+    [itemPanel close];
+    [tableView reloadData];
+    [tableView selectRowIndexes: [CPIndexSet indexSetWithIndex:row ] byExtendingSelection:NO];
 }
 
 
 @end
 
-var ItemCounter = 0;
+var ItemIndex = 0;
 
 @implementation Item : CPObject
 {
+    float    _index          @accessors(property=index);
     float    _price          @accessors(property=price);
     CPString _name           @accessors(property=name);
     CPString _rightOrWrong   @accessors(property=rightOrWrong);
@@ -234,8 +237,9 @@ var ItemCounter = 0;
 - (id)init
 {
     self = [super init];
+    _index = ItemIndex++;
     _price = 7.0;
-    _name = "bob " + (ItemCounter++);
+    _name = "bob " + (ItemIndex);
     _rightOrWrong = "wrong";
     return self;
 }
@@ -243,15 +247,17 @@ var ItemCounter = 0;
 - (id)initWithItem:(Item) aItem
 {
     self = [self init];
-    _name =  [aItem name];
-    _price = [aItem price];
+    _index =        [aItem index];
+    _name =         [aItem name];
+    _price =        [aItem price];
     _rightOrWrong = [aItem rightOrWrong];
     return self;
 }
 
 -(void) setFromItem:(Item) aItem{
-    _name =  [aItem name];
-    _price = [aItem price];
+    _index =        [aItem index];
+    _name =         [aItem name];
+    _price =        [aItem price];
     _rightOrWrong = [aItem rightOrWrong];
 }
 
@@ -280,8 +286,18 @@ var ItemCounter = 0;
     return NO;
 }
 
+-(BOOL) isEqual:(Item) item {
+    CPLog.trace(@"Item - (BOOL) isEqual:(Item) item  - self vs item %@,%@",self,item);
+    if(_index == [item index]){
+        CPLog.trace(@"Item - (BOOL) isEqual:(Item) item TRUE");
+        return YES;
+    }
+    return NO;
+    
+}
+
 -(CPString) description{
-    return [CPString stringWithFormat:@"Item name:price  - %@:%f",_name,_price];
+    return [CPString stringWithFormat:@"Item index:name:price  - %i:%@:%f",_index,_name,_price];
 }
 
 
