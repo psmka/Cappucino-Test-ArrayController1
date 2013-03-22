@@ -22,6 +22,7 @@ CPLogRegister(CPLogConsole);
     @outlet CPTextField         selectedPriceField;
     
     @outlet CPButton            kvcAdd;
+    @outlet CPButton            showPanel;
 
     CPArray                     _itemsArray    @accessors(property=itemsArray);
     @outlet CPArrayController   arrayController;
@@ -54,7 +55,6 @@ CPLogRegister(CPLogConsole);
     CPLog.trace("Theme %@", value);
     var value = [kvcAdd valueForThemeAttribute:@"bezel-color" inState:CPThemeStateHighlighted];
     CPLog.trace("Theme %@", value);
-    
     
 
     //create our UI elements
@@ -178,8 +178,11 @@ CPLogRegister(CPLogConsole);
 */
 
 -(@action) kvcAdd:(id) sender {
-    var kvc = [self mutableArrayValueForKey:@"itemsArray"];
-    [kvc insertObject:[Item new] atIndex:0];
+    if([sender state]){
+        CPLog.trace(@"-(@action) kvcAdd:(id) sender");
+        var kvc = [self mutableArrayValueForKey:@"itemsArray"];
+        [kvc insertObject:[Item new] atIndex:0];
+    }
 }
 
 -(@action) kvcEdit:(id) sender {
@@ -359,7 +362,7 @@ var ItemIndex = 0;
 
 - (id)transformedValue:(id)aValue
 {
-    CPLog.trace(@"WLWrongToRightTransformer - ((id)transformedValue:(id)aValue");
+//    CPLog.trace(@"WLWrongToRightTransformer - ((id)transformedValue:(id)aValue");
     return aValue == "wrong" ? "right" : aValue;
 }
 

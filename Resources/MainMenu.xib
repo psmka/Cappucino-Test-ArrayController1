@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -444,10 +444,10 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">17</double>
-											<int key="NSTvFlags">-222298112</int>
+											<int key="NSTvFlags">-88080384</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
-											<int key="NSGridStyleMask">2</int>
+											<int key="NSGridStyleMask">3</int>
 											<int key="NSColumnAutoresizingStyle">4</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -725,13 +725,13 @@
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1011394447">
-								<int key="NSCellFlags">-2080374784</int>
+								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">KVC - Add</string>
 								<reference key="NSSupport" ref="856882769"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="183172949"/>
-								<int key="NSButtonFlags">917782528</int>
+								<int key="NSButtonFlags">917913600</int>
 								<int key="NSButtonFlags2">129</int>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -843,23 +843,23 @@
 						<object class="NSButton" id="732869800">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{462, 181}, {130, 32}}</string>
+							<string key="NSFrame">{{601, 386}, {165, 32}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSNextKeyView" ref="328566558"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="195142050">
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">134217728</int>
-								<string key="NSContents">Panel</string>
+								<string key="NSContents">Edit Item</string>
 								<reference key="NSSupport" ref="856882769"/>
 								<string key="NSCellIdentifier">_NS:9</string>
 								<reference key="NSControlView" ref="732869800"/>
 								<int key="NSButtonFlags">-2038284288</int>
 								<int key="NSButtonFlags2">129</int>
 								<string key="NSAlternateContents"/>
-								<string key="NSKeyEquivalent"/>
+								<string type="base64-UTF8" key="NSKeyEquivalent">DQ</string>
 								<int key="NSPeriodicDelay">200</int>
 								<int key="NSPeriodicInterval">25</int>
 							</object>
@@ -1099,6 +1099,14 @@
 						<reference key="destination" ref="183172949"/>
 					</object>
 					<int key="connectionID">655</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">showPanel</string>
+						<reference key="source" ref="635946545"/>
+						<reference key="destination" ref="732869800"/>
+					</object>
+					<int key="connectionID">658</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1496,11 +1504,11 @@
 							<reference ref="552808713"/>
 							<reference ref="57003030"/>
 							<reference ref="620159090"/>
-							<reference ref="732869800"/>
 							<reference ref="827912513"/>
 							<reference ref="1041318845"/>
 							<reference ref="217704939"/>
 							<reference ref="328566558"/>
+							<reference ref="732869800"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -2152,7 +2160,7 @@
 				<reference key="dict.values" ref="1049"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">657</int>
+			<int key="maxID">658</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2244,6 +2252,7 @@
 							<string>objectController</string>
 							<string>selectedNameField</string>
 							<string>selectedPriceField</string>
+							<string>showPanel</string>
 							<string>tableView</string>
 							<string>theWindow</string>
 							<string>totalCountField</string>
@@ -2256,6 +2265,7 @@
 							<string>NSObjectController</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSButton</string>
 							<string>NSTableView</string>
 							<string>NSWindow</string>
 							<string>NSTextField</string>
@@ -2271,6 +2281,7 @@
 							<string>objectController</string>
 							<string>selectedNameField</string>
 							<string>selectedPriceField</string>
+							<string>showPanel</string>
 							<string>tableView</string>
 							<string>theWindow</string>
 							<string>totalCountField</string>
@@ -2300,6 +2311,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">selectedPriceField</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">showPanel</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">tableView</string>
