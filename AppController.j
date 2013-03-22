@@ -8,9 +8,10 @@
 
 @import <Foundation/CPObject.j>
 @import <AppKit/CPArrayController.j>
-
+@import <AppKit/CPColor.j>
 
 CPLogRegister(CPLogConsole);
+
 
 @implementation AppController : CPObject
 {
@@ -19,6 +20,8 @@ CPLogRegister(CPLogConsole);
     @outlet CPTextField         totalCountField;
     @outlet CPTextField         selectedNameField;
     @outlet CPTextField         selectedPriceField;
+    
+    @outlet CPButton            kvcAdd;
 
     CPArray                     _itemsArray    @accessors(property=itemsArray);
     @outlet CPArrayController   arrayController;
@@ -35,9 +38,24 @@ CPLogRegister(CPLogConsole);
     [arrayController setEditable:YES];
     [arrayController setObjectClass:Item];
     [arrayController setAutomaticallyPreparesContent:YES];
+    [arrayController setSortDescriptors:[CPArray arrayWithObjects:[CPSortDescriptor sortDescriptorWithKey:@"name" ascending:YES], nil]];
+    
+    
+    var highlightedBezelColor = CPColorWithImages([["default-button-bezel-highlighted-left.png", 4.0, 24.0],
+                                                   ["default-button-bezel-highlighted-center.png", 1.0, 24.0],
+                                                   ["default-button-bezel-highlighted-right.png", 4.0, 24.0]
+                                                   ],CPColorPatternIsHorizontal);
 
-    [arrayController setSelectsInsertedObjects:YES];
-    [arrayController setAvoidsEmptySelection:YES];
+    
+    CPLog.trace("Theme %@", highlightedBezelColor);
+    [kvcAdd setValue:highlightedBezelColor forThemeAttribute:@"bezel-color" inState:CPThemeStateBordered | CPThemeStateHighlighted];
+    [kvcAdd setValue:[CPColor whiteColor] forThemeAttribute:@"text-color" inState:CPThemeStateHighlighted];
+    var value = [kvcAdd currentValueForThemeAttribute:@"bezel-color"];
+    CPLog.trace("Theme %@", value);
+    var value = [kvcAdd valueForThemeAttribute:@"bezel-color" inState:CPThemeStateHighlighted];
+    CPLog.trace("Theme %@", value);
+    
+    
 
     //create our UI elements
 
@@ -193,8 +211,8 @@ CPLogRegister(CPLogConsole);
 }
 
 -(@action) showItemPanel:(id) sender {
-    var kvc = [self mutableArrayValueForKey:@"itemsArray"];
-    var selectedItem = [kvc objectAtIndex:[tableView selectedRow]];
+    CPLog.trace(@"(@action) showItemPanel:(id) sender - %i",[tableView selectedRow]);
+    var selectedItem = [[arrayController arrangedObjects] objectAtIndex:[tableView selectedRow]];
     var item = [[Item alloc] initWithItem:selectedItem];
 //    [self setValue:item forKey:@"currentItem"];
     [self setCurrentItem:item];
@@ -210,15 +228,35 @@ CPLogRegister(CPLogConsole);
 -(@action) itemPanel:(id) sender {
     CPLog.trace(@"@action) itemPanel:(id) sender - title: %@",[sender title]);
     if([[sender title] isEqualToString:@"OK"]){
-        CPLog.trace(@"@action) replace index %i with item %@",_currentItem);
         var kvc = [self mutableArrayValueForKey:@"itemsArray"];
         var row = [kvc indexOfObject:_currentItem];
+        CPLog.trace(@"@action) replace index %i with item %@",row,_currentItem);
         [kvc replaceObjectAtIndex:row withObject:_currentItem];
+        row = [[arrayController arrangedObjects] indexOfObject:_currentItem];
     }
     [CPApp abortModal];
     [itemPanel close];
     [tableView reloadData];
     [tableView selectRowIndexes: [CPIndexSet indexSetWithIndex:row ] byExtendingSelection:NO];
+}
+
+-(@action) showOrder:(id) sender {
+    var kvc = [self mutableArrayValueForKey:@"itemsArray"];
+    var ar_kvc = [self mutableArrayValueForKey:@"arrayController.arrangedObjects"];
+    CPLog.trace(@"-(@action) showOrder:(id) sender ");
+    CPLog.trace(@"-(@action) showOrder:(id) kvc array - %@",kvc);
+    CPLog.trace(@"-(@action) showOrder:(id) ar kvc array - %@",ar_kvc);
+    CPLog.trace(@"-(@action) showOrder:(id) itemsArray - %@",_itemsArray);
+    CPLog.trace(@"-(@action) showOrder:(id) Arraycontroller - %@",[arrayController arrangedObjects]);
+}
+
+#pragma mark TableView DataSource
+
+- (void)tableView:(CPTableView)aTableView sortDescriptorsDidChange:(CPArray)oldDescriptors
+{
+	CPLog.trace(@"TabelView - sortDescriptorsDidChange");
+    var newDescriptors = [aTableView sortDescriptors];
+    [_itemsArray sortUsingDescriptors:newDescriptors];
 }
 
 
@@ -287,9 +325,9 @@ var ItemIndex = 0;
 }
 
 -(BOOL) isEqual:(Item) item {
-    CPLog.trace(@"Item - (BOOL) isEqual:(Item) item  - self vs item %@,%@",self,item);
+//    CPLog.trace(@"Item - isEqual: self:%@  compare: %@ ",self,item);
     if(_index == [item index]){
-        CPLog.trace(@"Item - (BOOL) isEqual:(Item) item TRUE");
+//        CPLog.trace(@"Item - (BOOL) isEqual:(Item) item TRUE");
         return YES;
     }
     return NO;
@@ -297,7 +335,7 @@ var ItemIndex = 0;
 }
 
 -(CPString) description{
-    return [CPString stringWithFormat:@"Item index:name:price  - %i:%@:%f",_index,_name,_price];
+    return [CPString stringWithFormat:@" Item( index:%i  name:%@  price:%f  RightWrong:%@) ",_index,_name,_price,_rightOrWrong];
 }
 
 
