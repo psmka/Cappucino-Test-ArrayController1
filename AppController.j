@@ -187,22 +187,27 @@ CPLogRegister(CPLogConsole);
 
 -(@action) kvcEdit:(id) sender {
     var kvc = [self mutableArrayValueForKey:@"itemsArray"];
-    var item = [kvc objectAtIndex:0];
+    var selectedItem = [[arrayController arrangedObjects] objectAtIndex:[tableView selectedRow]];
+    var item = [kvc objectAtIndex:[kvc indexOfObject:selectedItem]];
     [item setName:@"Edit kvc"];
     [item setPrice:564];
+    [tableView deselectAll];
 }
 
 -(@action) kvcReplace:(id) sender {
     var kvc = [self mutableArrayValueForKey:@"itemsArray"];
-    var item = [Item new];  
+    var selectedItem = [[arrayController arrangedObjects] objectAtIndex:[tableView selectedRow]];
+    var item = [Item new];
     [item setName:@"Tom"];
     [item setPrice:3232];
-    [kvc replaceObjectAtIndex:0 withObject:item];
+    [kvc replaceObjectAtIndex:[kvc indexOfObject:selectedItem] withObject:item];
+    [tableView deselectAll];
 }
 
 -(@action) kvcDelete:(id) sender {
     var kvc = [self mutableArrayValueForKey:@"itemsArray"];
-    [kvc removeObjectAtIndex:0];
+    var selectedItem = [[arrayController arrangedObjects] objectAtIndex:[tableView selectedRow]];
+    [kvc removeObjectAtIndex:[kvc indexOfObject:selectedItem]];
 }
 
 -(@action) kvcValidate:(id) sender {
